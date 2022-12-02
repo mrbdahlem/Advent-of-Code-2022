@@ -140,6 +140,7 @@ public class Helper {
                               "/day/" + day + "/input");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
+            con.setRequestProperty("User-Agent", "BlueJ AOC Template - github.com/mrbdahlem/Advent-of-Code by mrbdahlem@gmail.com");
             con.setRequestProperty("Cookie", "session=" + cookie);
 
             con.setInstanceFollowRedirects(true);
