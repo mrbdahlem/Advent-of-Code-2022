@@ -6,7 +6,7 @@
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Day02Solution implements DaySolution
+public class Day02Solved implements DaySolution
 {
     // Adjust these to test against the proper input file(s)
     public static String SAMPLE_INPUT_FILENAME = ""; 
@@ -21,7 +21,7 @@ public class Day02Solution implements DaySolution
     // Add any member variables you will need for the processed input or
     // to carry between question parts.
     
-    
+    private String[][] guide;
     
     
     /**
@@ -40,7 +40,12 @@ public class Day02Solution implements DaySolution
         this.input = Helper.loadInput(day, SAMPLE_INPUT_FILENAME);
         
         // process the input and initialise instance variables
+        String[] lines = this.input.split("\n");
+        guide = new String[lines.length][];
         
+        for (int i = 0; i < lines.length; i++) {
+            guide[i] = lines[i].split(" ");
+        }
         
     }
 
@@ -54,21 +59,130 @@ public class Day02Solution implements DaySolution
         String solution = "";
         // Solve part 1 for this day here
         
+        int score = 0;
         
-        return solution;
+        for (String[] round : guide) {
+            score += scoreRound(them(round[0]), me(round[1]));
+        }
+        
+        return solution + score;
     }
+    
+    private String them(String choice) {
+        if (choice.equalsIgnoreCase("A")) return "rock";
+        if (choice.equalsIgnoreCase("B")) return "paper";
+        /* if (choice.equalsIgnoreCase("C")) */ return "scissors"; 
+    }
+    
+    private String me(String choice) {
+        if (choice.equalsIgnoreCase("X")) return "rock";
+        if (choice.equalsIgnoreCase("Y")) return "paper";
+        /* if (choice.equalsIgnoreCase("Z")) */ return "scissors"; 
+    }
+    
+    private int scoreRound(String them, String me) {
+        int score = 0;
+        if (me.equals("rock")) {
+            score += 1; // rock
+            if (them.equals("paper")) {
+                score += 0; // lost 
+            } 
+            else if (them.equals("rock")) {
+                score += 3; // tie
+            }
+            else if (them.equals("scissors")) {
+                score += 6; // win
+            }
+        }
+        if (me.equals("paper")) {
+            score += 2; // rock
+            if (them.equals("paper")) {
+                score += 3; // tie
+            } 
+            else if (them.equals("rock")) {
+                score += 6; // win
+            }
+            else if (them.equals("scissors")) {
+                score += 0; // lost 
+            }
+        }
+        if (me.equals("scissors")) {
+            score += 3; // rock
+            if (them.equals("paper")) {
+                score += 6; // win
+            } 
+            else if (them.equals("rock")) {
+                score += 0; // lost 
+            }
+            else if (them.equals("scissors")) {
+                score += 3; // tie
+            }
+        }
         
+        
+        return score;
+    }
+    
     /**
      * Solve part 2 of this day's problem.
      * @return the solution to part 2 of the problem
      */
     public String part2()
     {
-        String solution = "";
-        // Solve part 2 for this day here
+        int score = 0;
         
+        for (String[] round : guide) {
+            String them = them(round[0]);
+            score += scoreRound(them, myChoice(them, round[1]));
+        }
         
-        return solution;
+        return "" + score;
+    }
+    
+    public String myChoice(String them, String outcome) {
+        String choice = "";
+        
+        if (them.equals("rock")) {
+            switch (outcome.toUpperCase()) {
+                case "X":
+                    choice = "scissors";
+                    break;
+                case "Y":
+                    choice = them;
+                    break;
+                case "Z":
+                    choice = "paper";
+                    break;
+            }
+        }
+        if (them.equals("paper")) {
+            switch (outcome.toUpperCase()) {
+                case "X":
+                    choice = "rock";
+                    break;
+                case "Y":
+                    choice = them;
+                    break;
+                case "Z":
+                    choice = "scissors";
+                    break;
+            }
+        }
+        if (them.equals("scissors")) {
+            switch (outcome.toUpperCase()) {
+                case "X":
+                    choice = "paper";
+                    break;
+                case "Y":
+                    choice = them;
+                    break;
+                case "Z":
+                    choice = "rock";
+                    break;
+            }
+        }
+        
+        return choice;
     }
     
     /**
@@ -84,8 +198,8 @@ public class Day02Solution implements DaySolution
         }
         
         // Clear the terminal
-		System.out.print('\u000C');
-		
+        System.out.print('\u000C');
+        
         // Get a handle to this class (so that each day's solution follows
         // the same template
         Class thisClass = java.lang.invoke.MethodHandles.lookup().lookupClass();
