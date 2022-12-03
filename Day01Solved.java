@@ -6,7 +6,7 @@ import java.util.*;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Day01Solved implements DaySolution
+public class Day01Solved extends DaySolution
 {
     // Adjust these to test against the proper input file(s)
     public static String SAMPLE_INPUT_FILENAME = ""; 
@@ -103,44 +103,15 @@ public class Day01Solved implements DaySolution
      * is stored in input/sample/dayXX/.
      */
     public static void main(String[] args) {
-        if (args.length > 0 && 
-            (SAMPLE_INPUT_FILENAME == null || 
-             SAMPLE_INPUT_FILENAME.isEmpty())) {
+        if (args.length > 0 &&
+                (SAMPLE_INPUT_FILENAME == null ||
+                        SAMPLE_INPUT_FILENAME.isEmpty())) {
             SAMPLE_INPUT_FILENAME = args[0];
         }
-        
-        // Clear the terminal
-        System.out.print('\u000C');
-        
+
         // Get a handle to this class (so that each day's solution follows
         // the same template
-        Class thisClass = java.lang.invoke.MethodHandles.lookup().lookupClass();
-        
-        // Instantiate the solution from the class's handle. This is a weird
-        // way to do this, so you shouldn't try to copy it.
-        DaySolution todaysSolution = null;
-        try {
-            todaysSolution = (DaySolution)thisClass.newInstance();
-        }
-        catch (Exception e) {
-            // If there is an exception constructing this class, exit with
-            // an error message
-            System.err.println(e.getLocalizedMessage());
-            e.printStackTrace();
-            System.exit(1);
-        }
-        
-        // Load and parse the input for this day's problem
-        todaysSolution.prepare();
-        
-        // Solve both parts of the problem
-        String part1Solution = todaysSolution.part1();        
-        String part2Solution = todaysSolution.part2();
-        
-        // Print out the solution for both parts. This happens at the end
-        // so that answers can be copied/pasted even if debugging output is
-        // provided
-        System.out.println("Part 1 Solution: >" + part1Solution + "<");
-        System.out.println("Part 2 Solution: >" + part2Solution + "<");
+        Class<?> thisClass = java.lang.invoke.MethodHandles.lookup().lookupClass();
+        DaySolution.runDay((Class<? extends DaySolution>) thisClass);
     }
 }
