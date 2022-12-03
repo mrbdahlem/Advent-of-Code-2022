@@ -1,4 +1,4 @@
- 
+import java.util.*;
 
 /**
  * Solve one day of Advent of Code.
@@ -6,7 +6,7 @@
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Day03Solution extends DaySolution
+public class Day03Solved extends DaySolution
 {
     // Adjust these to test against the proper input file(s)
     public static String SAMPLE_INPUT_FILENAME = ""; 
@@ -14,14 +14,11 @@ public class Day03Solution extends DaySolution
     // folder of this project. If a sample filename is provided, that file
     // that file's contents will be used when running the solution INSTEAD
     // OF your provided input.
-    
-    // The provided (unprocessed) input
-    private String input;
-            
+
     // Add any member variables you will need for the processed input or
     // to carry between question parts.
-    
-    
+    private String[][] rucksacks;
+    private final Map<String, Integer> priority = new HashMap<>();
     
     
     /**
@@ -37,11 +34,31 @@ public class Day03Solution extends DaySolution
         System.out.println("Advent of Code day " + day + " solution:");                                        
     
         // load or download the input file into the input String
-        this.input = Helper.loadInput(day, SAMPLE_INPUT_FILENAME);
+        // The provided (unprocessed) input
+        String input = Helper.loadInput(day, SAMPLE_INPUT_FILENAME);
         
         // process the input and initialise instance variables
-        
-        
+        String[] lines = input.split("\n");
+        rucksacks = new String[lines.length][2];
+
+//        System.out.println(lines.length);
+
+        for (int i = 0; i < rucksacks.length; i++) {
+            rucksacks[i][0] = lines[i].substring(0, lines[i].length() / 2);
+            rucksacks[i][1] = lines[i].substring(lines[i].length() / 2);
+        }
+
+        for (int i = 0; i < 26; i++) {
+            String item = "" + (char)('a' + i);
+            priority.put(item, i + 1);
+//            System.out.println(item);
+        }
+
+        for (int i = 0; i < 26; i++) {
+            String item = "" + (char)('A' + i);
+            priority.put(item, i + 27);
+//            System.out.println(item);
+        }
     }
 
     
@@ -53,8 +70,20 @@ public class Day03Solution extends DaySolution
     {
         String solution = "";
         // Solve part 1 for this day here
-        
-        
+
+        int total = 0;
+
+        for (String[] compartments : rucksacks) {
+            for (String item : compartments[0].split("")) {
+                if (item != null && compartments[1].contains(item)) {
+//                    System.out.println(item);
+                    total += priority.get(item);
+                    break;
+                }
+            }
+        }
+
+        solution += total;
         return solution;
     }
         
@@ -66,8 +95,32 @@ public class Day03Solution extends DaySolution
     {
         String solution = "";
         // Solve part 2 for this day here
-        
-        
+
+        int total = 0;
+        int groupSize = 3;
+        for (int group = 0; group < rucksacks.length / groupSize; group++) {
+            Set<String> intersection = new HashSet<>();
+
+            for (int i = 0; i < groupSize; i++) {
+                Set<String> contents =new HashSet<>();
+
+                for (String compartment : rucksacks[group * groupSize + i]) {
+                    contents.addAll(Arrays.asList(compartment.split("")));
+                }
+
+                if (i == 0) {
+                    intersection.addAll(contents);
+                }
+                else {
+                    intersection.retainAll(contents);
+                }
+            }
+
+            assert intersection.size() == 1;
+            total += (intersection.stream().map(priority::get).reduce(Integer::sum)).orElse(0);
+        }
+
+        solution += total;
         return solution;
     }
     
