@@ -2,4 +2,4 @@
 
 My Solutions to Advent of Code 2022 in Java, in BlueJ. 
 
-![](https://img.shields.io/badge/days%20completed-2-red) ![](https://img.shields.io/badge/stars%20⭐-4-yellow)
+![](https://img.shields.io/badge/days%20completed-3-red) ![](https://img.shields.io/badge/stars%20⭐-6-yellow)
