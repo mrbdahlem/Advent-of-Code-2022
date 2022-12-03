@@ -14,10 +14,7 @@ public class Day02Solved extends DaySolution
     // folder of this project. If a sample filename is provided, that file
     // that file's contents will be used when running the solution INSTEAD
     // OF your provided input.
-    
-    // The provided (unprocessed) input
-    private String input;
-            
+
     // Add any member variables you will need for the processed input or
     // to carry between question parts.
     
@@ -37,10 +34,11 @@ public class Day02Solved extends DaySolution
         System.out.println("Advent of Code day " + day + " solution:");                                        
     
         // load or download the input file into the input String
-        this.input = Helper.loadInput(day, SAMPLE_INPUT_FILENAME);
+        // The provided (unprocessed) input
+        String input = Helper.loadInput(day, SAMPLE_INPUT_FILENAME);
         
         // process the input and initialise instance variables
-        String[] lines = this.input.split("\n");
+        String[] lines = input.split("\n");
         guide = new String[lines.length][];
         
         for (int i = 0; i < lines.length; i++) {
@@ -84,41 +82,28 @@ public class Day02Solved extends DaySolution
         int score = 0;
         if (me.equals("rock")) {
             score += 1; // rock
-            if (them.equals("paper")) {
-                score += 0; // lost 
-            } 
-            else if (them.equals("rock")) {
-                score += 3; // tie
-            }
-            else if (them.equals("scissors")) {
-                score += 6; // win
+            switch (them) {
+//                case "paper" -> score += 0; // lost
+                case "rock" -> score += 3; // tie
+                case "scissors" -> score += 6; // win
             }
         }
         if (me.equals("paper")) {
             score += 2; // rock
-            if (them.equals("paper")) {
-                score += 3; // tie
-            } 
-            else if (them.equals("rock")) {
-                score += 6; // win
-            }
-            else if (them.equals("scissors")) {
-                score += 0; // lost 
+            switch (them) {
+                case "paper" -> score += 3; // tie
+                case "rock" -> score += 6; // win
+//                case "scissors" -> score += 0; // lost
             }
         }
         if (me.equals("scissors")) {
             score += 3; // rock
-            if (them.equals("paper")) {
-                score += 6; // win
-            } 
-            else if (them.equals("rock")) {
-                score += 0; // lost 
-            }
-            else if (them.equals("scissors")) {
-                score += 3; // tie
+            switch (them) {
+                case "paper" -> score += 6; // win
+//                case "rock" -> score += 0; // lost
+                case "scissors" -> score += 3; // tie
             }
         }
-        
         
         return score;
     }
@@ -144,42 +129,26 @@ public class Day02Solved extends DaySolution
         
         if (them.equals("rock")) {
             switch (outcome.toUpperCase()) {
-                case "X":
-                    choice = "scissors";
-                    break;
-                case "Y":
-                    choice = them;
-                    break;
-                case "Z":
-                    choice = "paper";
-                    break;
+                case "X" -> choice = "scissors";
+                case "Y" -> choice = them;
+                case "Z" -> choice = "paper";
             }
         }
         if (them.equals("paper")) {
-            switch (outcome.toUpperCase()) {
-                case "X":
-                    choice = "rock";
-                    break;
-                case "Y":
-                    choice = them;
-                    break;
-                case "Z":
-                    choice = "scissors";
-                    break;
-            }
+            choice = switch (outcome.toUpperCase()) {
+                case "X" -> "rock";
+                case "Y" -> them;
+                case "Z" -> "scissors";
+                default -> choice;
+            };
         }
         if (them.equals("scissors")) {
-            switch (outcome.toUpperCase()) {
-                case "X":
-                    choice = "paper";
-                    break;
-                case "Y":
-                    choice = them;
-                    break;
-                case "Z":
-                    choice = "rock";
-                    break;
-            }
+            choice = switch (outcome.toUpperCase()) {
+                case "X" -> "paper";
+                case "Y" -> them;
+                case "Z" -> "rock";
+                default -> choice;
+            };
         }
         
         return choice;

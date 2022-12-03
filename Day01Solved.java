@@ -14,10 +14,7 @@ public class Day01Solved extends DaySolution
     // folder of this project. If a sample filename is provided, that file
     // that file's contents will be used when running the solution INSTEAD
     // OF your provided input.
-    
-    // The provided (unprocessed) input
-    private String input;
-            
+
     // Add any member variables you will need for the processed input or
     // to carry between question parts.
     private int[][] elfCalories;
@@ -38,7 +35,8 @@ public class Day01Solved extends DaySolution
         System.out.println("Advent of Code day " + day + " solution:");                                        
     
         // load or download the input file into the input String
-        this.input = Helper.loadInput(day, SAMPLE_INPUT_FILENAME);
+        // The provided (unprocessed) input
+        String input = Helper.loadInput(day, SAMPLE_INPUT_FILENAME);
         
         // process the input and initialise instance variables
         String[] elves = input.split("\n\n");
