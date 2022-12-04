@@ -1,4 +1,5 @@
- 
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Solve one day of Advent of Code.
@@ -9,20 +10,16 @@
 public class Day04Solution extends DaySolution
 {
     // Adjust these to test against the proper input file(s)
-    public static String SAMPLE_INPUT_FILENAME = ""; 
+    public static String SAMPLE_INPUT_FILENAME = "";
+//    public static String SAMPLE_INPUT_FILENAME = "sample.txt";
     // sample input files should be plain text files in the input/sample/
     // folder of this project. If a sample filename is provided, that file
     // that file's contents will be used when running the solution INSTEAD
     // OF your provided input.
-    
-    // The provided (unprocessed) input
-    private String input;
-            
+
     // Add any member variables you will need for the processed input or
     // to carry between question parts.
-    
-    
-    
+    private final List<ElfPair> pairs = new ArrayList<>();
     
     /**
      * Load the day's input then parse it for solving in part1 and part2.
@@ -37,10 +34,14 @@ public class Day04Solution extends DaySolution
         System.out.println("Advent of Code day " + day + " solution:");                                        
     
         // load or download the input file into the input String
-        this.input = Helper.loadInput(day, SAMPLE_INPUT_FILENAME);
+        // The provided (unprocessed) input
+        String input = Helper.loadInput(day, SAMPLE_INPUT_FILENAME);
         
         // process the input and initialise instance variables
-        
+        String[] pairString = input.split("\n");
+        for (String s : pairString) {
+            pairs.add(new ElfPair(s));
+        }
         
     }
 
@@ -51,10 +52,15 @@ public class Day04Solution extends DaySolution
      */
     public String part1()
     {
-        String solution = "";
+        String solution = "(601 high) >";
         // Solve part 1 for this day here
-        
-        
+
+        int count = 0;
+        for (ElfPair pair : pairs) {
+            if (pair.fullyContains()) count++;
+        }
+
+        solution += count;
         return solution;
     }
         
@@ -66,8 +72,14 @@ public class Day04Solution extends DaySolution
     {
         String solution = "";
         // Solve part 2 for this day here
-        
-        
+
+
+        int count = 0;
+        for (ElfPair pair : pairs) {
+            if (pair.hasOverlap()) count++;
+        }
+
+        solution += count;
         return solution;
     }
     
@@ -87,5 +99,50 @@ public class Day04Solution extends DaySolution
         // the same template
         Class<?> thisClass = java.lang.invoke.MethodHandles.lookup().lookupClass();
         DaySolution.runDay((Class<? extends DaySolution>) thisClass);
+    }
+
+    private static class ElfPair {
+        Elf a;
+        Elf b;
+
+        public ElfPair(String s) {
+            String[] ranges = s.split(",");
+            a = new Elf(ranges[0]);
+            b = new Elf(ranges[1]);
+        }
+
+        public boolean fullyContains() {
+            if (a.minVal >= b.minVal && a.maxVal <= b.maxVal) {
+                return true;
+            }
+            return b.minVal >= a.minVal && b.maxVal <= a.maxVal;
+        }
+
+        public boolean hasOverlap() {
+            if (fullyContains()) {
+                return true;
+            }
+            if (a.minVal <= b.minVal && a.maxVal >= b.minVal) {
+                return true;
+            }
+
+            if (b.minVal <= a.minVal && b.maxVal >= a.maxVal) {
+                return true;
+            }
+
+            return  (a.minVal <= b.maxVal && a.maxVal >= b.maxVal);
+        }
+    }
+
+    private static class Elf {
+        int minVal;
+        int maxVal;
+
+        public Elf(String s) {
+            String[] vals = s.split("-");
+            minVal = Integer.parseInt(vals[0]);
+            maxVal = Integer.parseInt(vals[1]);
+
+        }
     }
 }
