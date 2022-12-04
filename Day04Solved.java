@@ -7,7 +7,7 @@ import java.util.List;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Day04Solution extends DaySolution
+public class Day04Solved extends DaySolution
 {
     // Adjust these to test against the proper input file(s)
     public static String SAMPLE_INPUT_FILENAME = "";
