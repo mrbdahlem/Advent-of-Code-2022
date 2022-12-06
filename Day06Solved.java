@@ -1,11 +1,10 @@
-import java.util.*;
 /**
  * Solve one day of Advent of Code.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Day06Solution extends DaySolution
+public class Day06Solved extends DaySolution
 {
     // Adjust these to test against the proper input file(s)
     public static String SAMPLE_INPUT_FILENAME = ""; 
@@ -13,13 +12,10 @@ public class Day06Solution extends DaySolution
     // folder of this project. If a sample filename is provided, that file
     // that file's contents will be used when running the solution INSTEAD
     // OF your provided input.
-    
-    // The provided (unprocessed) input
-    private String input;
-            
+
     // Add any member variables you will need for the processed input or
     // to carry between question parts.
-    
+    private char[] buffer;
     
     
     
@@ -36,10 +32,11 @@ public class Day06Solution extends DaySolution
         System.out.println("\u000CAdvent of Code day " + day + " solution:");                                        
     
         // load or download the input file into the input String
-        this.input = Helper.loadInput(day, SAMPLE_INPUT_FILENAME);
+        // The provided (unprocessed) input
+        String input = Helper.loadInput(day, SAMPLE_INPUT_FILENAME);
         
         // process the input and initialise instance variables
-        
+        this.buffer = input.toCharArray();
         
     }
 
@@ -52,7 +49,14 @@ public class Day06Solution extends DaySolution
     {
         String solution = "";
         // Solve part 1 for this day here
-        
+        int window = 4;
+
+        for (int i = window; i < buffer.length; i++) {
+            if (!containsDupes(i - window, i)) {
+                solution += i;
+                break;
+            }
+        }
         
         return solution;
     }
@@ -65,9 +69,32 @@ public class Day06Solution extends DaySolution
     {
         String solution = "";
         // Solve part 2 for this day here
-        
+
+        int window = 14;
+        for (int i = window; i < buffer.length; i++) {
+            if (!containsDupes(i - window, i)) {
+                solution += i;
+                break;
+            }
+        }
+
+        if (solution.length() == 0) {
+            System.out.println("!!!!");
+        }
+
         
         return solution;
+    }
+
+    private boolean containsDupes(int start, int end) {
+        for (int i = start; i < end; i++) {
+            for (int j = i + 1; j < end; j++) {
+                if (buffer[i] == buffer[j]) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     
     /**
