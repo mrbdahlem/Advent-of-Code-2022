@@ -8,11 +8,12 @@ import java.util.*;
 public class Day21Solution extends DaySolution
 {
     // Adjust these to test against the proper input file(s)
-    public static String SAMPLE_INPUT_FILENAME = ""; 
-    // sample input files should be plain text files in the input/sample/
-    // folder of this project. If a sample filename is provided, that file
-    // that file's contents will be used when running the solution INSTEAD
-    // OF your provided input.
+    public static String SAMPLE_INPUT_FILENAME = "";
+//    public static String SAMPLE_INPUT_FILENAME = "sample.txt";
+    // sample input files should be plain text files in the
+    // input/sample/dayXX folder of this project. If a sample filename
+    // is provided, that file's contents will be used when running the
+    // solution INSTEAD OF your provided input.
     
     // The provided (unprocessed) input
     private String input;

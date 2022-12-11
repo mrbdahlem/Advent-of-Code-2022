@@ -21,7 +21,7 @@ public abstract class DaySolution
         // way to do this, so you shouldn't try to copy it.
         DaySolution todaysSolution = null;
         try {
-            todaysSolution = (DaySolution)solutionClass.getConstructor().newInstance();
+            todaysSolution = solutionClass.getConstructor().newInstance();
         }
         catch (Exception e) {
             // If there is an exception constructing this class, exit with

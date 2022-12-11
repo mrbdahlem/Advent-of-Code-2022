@@ -8,10 +8,11 @@ public class Day10Solved extends DaySolution
 {
     // Adjust these to test against the proper input file(s)
     public static String SAMPLE_INPUT_FILENAME = "";
-    // sample input files should be plain text files in the input/sample/
-    // folder of this project. If a sample filename is provided, that
-    // file's contents will be used when running the solution INSTEAD
-    // OF your provided input.
+//    public static String SAMPLE_INPUT_FILENAME = "sample.txt";
+    // sample input files should be plain text files in the
+    // input/sample/dayXX folder of this project. If a sample filename
+    // is provided, that file's contents will be used when running the
+    // solution INSTEAD OF your provided input.
 
     // Add any member variables you will need for the processed input or
     // to carry between question parts.
