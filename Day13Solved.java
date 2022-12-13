@@ -155,19 +155,19 @@ public class Day13Solved extends DaySolution
             while (pos < data.length()) {
                 char c = data.charAt(pos);
 
-                String item = "";
+                StringBuilder item = new StringBuilder();
                 if (Character.isDigit(c)) {
                     while (pos < data.length() && Character.isDigit(data.charAt(pos))) {
-                        item += data.charAt(pos);
+                        item.append(data.charAt(pos));
                         pos++;
                     }
-                    packetData.add(new Packet(Integer.parseInt(item)));
+                    packetData.add(new Packet(Integer.parseInt(item.toString())));
                     pos++;
                 }
                 else if (c == '[') {
                     int brackets = 1;
                     pos++;
-                    item += c;
+                    item.append(c);
                     while (pos < data.length() && brackets > 0) {
                         c = data.charAt(pos);
                         if (c == '[') {
@@ -176,10 +176,10 @@ public class Day13Solved extends DaySolution
                         else if (c == ']') {
                             brackets--;
                         }
-                        item += c;
+                        item.append(c);
                         pos++;
                     }
-                    packetData.add(new Packet(item));
+                    packetData.add(new Packet(item.toString()));
                     pos++;
                 }
                 else {
@@ -228,9 +228,7 @@ public class Day13Solved extends DaySolution
          * @return the new packet containing the integer as a list
          */
         private static Packet asList(Integer val) {
-            Packet p = new Packet("[" + val + "]");
-//            System.out.println(p);
-            return p;
+            return new Packet("[" + val + "]");
         }
 
         public String toString() {
